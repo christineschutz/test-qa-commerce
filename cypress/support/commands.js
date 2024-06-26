@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('limparCarrinho', () => { 
-    cy.get(':nth-child(1) > .card > .card-body > .btn').click()
+    cy.get(':nth-child(1) > .nav-link').click()
     cy.visit('cart.html')
     cy.wait(1000)
     cy.contains('Remover').each(($btn) =>{

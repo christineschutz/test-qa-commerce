@@ -4,7 +4,7 @@ describe('Funcionalidade: Produto', () => {
     
     beforeEach(() => {
         cy.visit('')
-        //TODO: Resolver o métoco limpar carrinho: cy.limparCarrinho()
+        //TO-DO: Resolver o métoco limpar carrinho: cy.limparCarrinho() - OK
     });
     
     
@@ -21,6 +21,7 @@ describe('Funcionalidade: Produto', () => {
     });
 
     it.only('Deve adicionar ao carrinho pela página do produto', () => {
+        cy.limparCarrinho() //resolvido alterando no método para clicar na home e limpar o carrinho, antes de seguir o processo
         cy.get('.card-img-top').last().click()
         cy.get('#product-quantity').clear().type(10)
         cy.get('#add-to-cart').click()
