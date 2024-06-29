@@ -1,6 +1,6 @@
 /// <reference types='cypress' />
 import CheckoutPage from "../../support/page-objects/checkout-page";
-import faker from '@faker-js/faker';
+//import faker from '@faker-js/faker';
 
 describe('Funcionalidade: Checkout', () => {
     beforeEach(() => {

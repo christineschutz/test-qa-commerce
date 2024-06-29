@@ -34,3 +34,37 @@ Cypress.Commands.add('limparCarrinho', () => {
         })
     cy.get('.text-center > .btn').click()
  })
+
+
+ Cypress.Commands.add('token', (email, senha) => {
+
+    cy.api({
+        method: "POST",
+        url: "api/login",
+        body: {
+          email: email,
+          password: senha,
+        },
+      }).then((response) =>{
+          expect(response.status).equal(200)
+          return response.body.token
+      })
+
+ })
+
+
+ Cypress.Commands.add('cadastraUsuarioApi', (nome, email, senha, admin) => {
+    cy.api({
+        method: 'POST',
+        url: 'api/users',
+        body: {
+            name: nome,
+            email: email,
+            password: senha,
+            isAdmin: admin
+        }
+    }).then((response) => {
+        expect(response.status).equal(200)
+    })
+ })
+

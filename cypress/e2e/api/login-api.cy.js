@@ -1,0 +1,18 @@
+/// <reference types='cypress' />
+
+describe("Teste de API - Funcionalidade Login", () => {
+  it("Deve fazer login com sucesso", () => {
+    cy.api({
+      method: "POST",
+      url: "http://localhost:3000/api/login",
+      body: {
+        email: "teste@admin.com",
+        password: "Teste123@",
+      },
+    }).then((response) =>{
+        expect(response.status).equal(200)
+        expect(response.body).to.have.property('token')
+        expect(response.duration).lessThan(150)
+    })
+  });
+});
