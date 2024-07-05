@@ -3,6 +3,7 @@
 describe('Teste API - Funcionalidade: Usuário', () => {
 
 let token
+let id
 before(() => {
     cy.token('teste@admin.com', 'Teste123@').then((tokenGerado) =>{
         token = tokenGerado
@@ -45,7 +46,7 @@ before(() => {
         let email = Date.now() + '@teste.com'
         cy.api({
             method: 'PUT',
-            url: 'api/users/12',
+            url: 'api/users/' + id,
             headers: {
                 Authorization: token
             },
@@ -62,13 +63,13 @@ before(() => {
         
     });
 
-    it('DELETE - Deve deleter um usuário com sucesso', () => {   
+    it.only('DELETE - Deve deleter um usuário com sucesso', () => {   
         // cy.cadastrarUsuarioApi('Para deletar', 'deletar@teste.com', 'admindeletar', false)
-        // TO-DO: melhorar a sequencia de teste do delete E PUT
+        // TO-DO: melhorar a sequencia de teste do DELETE E PUT
 
         cy.api({
             method: 'DELETE',
-            url: 'api/users/26',
+            url: 'api/users/' + id, 
             headers: {
                 Authorization: token
             },
@@ -78,7 +79,7 @@ before(() => {
         })
     });
 
-    it.only('Temporário', () => {
+    it('Temporário', () => {
         cy.token('teste@admin.com', 'Teste123@')
     });
 
