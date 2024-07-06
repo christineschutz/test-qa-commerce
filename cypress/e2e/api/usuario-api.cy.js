@@ -5,7 +5,7 @@ describe('Teste API - Funcionalidade: Usuário', () => {
 let token
 let id
 before(() => {
-    cy.token('teste@admin.com', 'Teste123@').then((tokenGerado) =>{
+    cy.token('admin@admin.com', 'admin').then((tokenGerado) =>{
         token = tokenGerado
     })
     //TO-DO: esconder login e senha
@@ -25,7 +25,8 @@ before(() => {
         })
     });
 
-    it('POST - Deve validar cadastro de um usuário com sucesso', () => {
+    it.only('POST - Deve validar cadastro de um usuário com sucesso', () => {
+        // biblioteca faker
         let email = Date.now() + '@teste.com'
         cy.api({
             method: 'POST',
@@ -37,50 +38,47 @@ before(() => {
                 isAdmin: false
             }
         }).then((response) => {
-            expect(response.status).equal(200)
-            expect(response.body).to.contain('Usuário criado com sucesso')
+            expect(response.status).equal(201)
+            expect(response.body.message).to.contain('Usuário criado com sucesso')
         })
     });
 
     it('PUT - Deve atualizar um usuário com sucesso', () => {
         let email = Date.now() + '@teste.com'
-        cy.api({
-            method: 'PUT',
-            url: 'api/users/' + id,
-            headers: {
-                Authorization: token
-            },
-            body: {
-                "name": "Teste update",
-                "email": email,
-                "password": "Teste123@",
-                "isAdmin": true
-              }
-        }).then((response) => {
-            expect(response.status).equal(200)
-            expect(response.body).to.contain('Usuário atualizado com sucesso')
+        cy.cadastrarUsuarioApi('Teste update', email, 'Teste@123', false).then((id) => {
+            cy.api({
+                method: 'PUT',
+                url: `api/users/${id}`,
+                headers: {
+                    Authorization: token
+                },
+                body: {
+                    "name": "Teste update",
+                    "email": email,
+                    "password": "Teste123@",
+                    "isAdmin": true
+                  }
+            }).then((response) => {
+                expect(response.status).equal(200)
+                expect(response.body.message).to.contain('Usuário atualizado com sucesso')
+            })
         })
-        
+
     });
 
-    it.only('DELETE - Deve deleter um usuário com sucesso', () => {   
-        // cy.cadastrarUsuarioApi('Para deletar', 'deletar@teste.com', 'admindeletar', false)
-        // TO-DO: melhorar a sequencia de teste do DELETE E PUT
-
-        cy.api({
-            method: 'DELETE',
-            url: 'api/users/' + id, 
-            headers: {
-                Authorization: token
-            },
-        }).then((response) => {
-            expect(response.status).equal(200)
-            expect(response.body).to.contain('Usuário deletado com sucesso')
+    it('DELETE - Deve deleter um usuário com sucesso', () => {   
+        cy.cadastrarUsuarioApi('Para deletar', 'email@delete.com', 'admindeletar', false).then((id) => {
+            cy.api({
+                method: 'DELETE',
+                url: 'api/users/' + id, 
+                headers: {
+                    Authorization: token
+                },
+            }).then((response) => {
+                expect(response.status).equal(200)
+                expect(response.body.message).to.contain('Usuário deletado com sucesso')
+            })
         })
     });
 
-    it('Temporário', () => {
-        cy.token('teste@admin.com', 'Teste123@')
-    });
-
-});
+})

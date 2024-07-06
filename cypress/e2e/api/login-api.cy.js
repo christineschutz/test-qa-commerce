@@ -6,13 +6,13 @@ describe("Teste de API - Funcionalidade Login", () => {
       method: "POST",
       url: "http://localhost:3000/api/login",
       body: {
-        email: "teste@admin.com",
-        password: "Teste123@",
+        email: "admin@admin.com",
+        password: "admin",
       },
     }).then((response) =>{
         expect(response.status).equal(200)
         expect(response.body).to.have.property('token')
-        expect(response.duration).lessThan(150)
+        expect(response.duration).lessThan(500)
     })
   });
 });

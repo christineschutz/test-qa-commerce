@@ -64,20 +64,7 @@ Cypress.Commands.add('limparCarrinho', () => {
             isAdmin: admin
         }
     }).then((response) => {
-        expect(response.status).equal(200)
-    })
- })
-
-
- Cypress.Commands.add('IdUsuario', (id) => {
-    cy.api({
-        method: 'GET',
-        url: 'api/users',
-        body: {
-            id: id
-        }
-    }).then((response) => {
-        expect(response.status).equal(200)
+        expect(response.status).equal(201)
         return response.body.id
     })
  })
